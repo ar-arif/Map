@@ -1,4 +1,5 @@
-
+function preload(){
+  
   fetch("https://api.covid19api.com/summary")
     .then((apiData) => {
       return apiData.json();
@@ -9,37 +10,51 @@
 
       afterThat(coronaData);
     });
-
-
-function afterThat(coronaData) {
-  const coronaDataLatest = coronaData;
-  // console.log(coronaDataLatest);
-
-  
-
-  fetch("countries.json")
-    .then((countriesID) => {
-      return countriesID.json();
+    
+    
+    fetch("https://raw.githubusercontent.com/ar-arif/Map/master/countries.json")
+    .then((countysLocation) => {
+      return countysLocation.json();
     })
     .then((data) => {
-      const countriesLocation = data;
-    
-      console.log(countriesLocation);
-
-      for (let i = 0; i < countriesLocation.length; i++) {
-        
-        var lon = countriesLocation[i].latlng[1];
-        var lan = countriesLocation[i].latlng[0];
-
-        funStup(lan);
-        
-      }
-
+      const countrysLanLon = data;
+      // console.log(countrysLanLon);
       
+      afterThat(countrysLanLon);
     });
+    
+  
+}
+preload();
   
 
+
+function afterThat(coronaData, countrysLanLon) {
+  
+  const coronaDataLatest = coronaData;
+  console.log(coronaDataLatest)
+  
+  
+  const counLanLon = countrysLanLon;
+  console.log(counLanLon);
+
+for (var i = 0; i < coronaDataLatest.Countries. length; i++) {
+  
+  let coronaCountriesID = coronaDataLatest.Countries[i].CountryCode.toLowerCase();
+  
+  console.log(coronaCountriesID);
+  
+  let latlon = counLanLon[coronaCountriesID];
+  console.log(latlon);
+  
 }
+
+}
+
+
+
+
+
 
 ///////////////////////MapBox///////////////////////////
 
@@ -51,6 +66,16 @@ var map = new mapboxgl.Map({
   center: [0, 20],
   zoom: 1,
 });
+
+map.touchZoomRotate.disableRotation();
+
+
+
+
+
+
+
+
 
 var size = 100;
 
@@ -147,19 +172,24 @@ map.on("load", function () {
   });
 
   // Add a marker feature to your geojson object
-  var marker = {
+  var marker = 
+    {
     type: "Feature",
     geometry: {
       type: "Point",
-      coordinates: [10, 10],
+      coordinates: [50, 50],
     },
-  },
+  }
+
+  
   ;
 
   geojson.features.push(marker);
   map.getSource("points").setData(geojson);
 });
 
-// funStup=(lan)=>{
-//   console.log(lan);
-// }
+
+
+
+
+
