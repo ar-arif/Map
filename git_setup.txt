@@ -11,9 +11,9 @@ git config --global user.email ar.arif7497.1@gmail.com
 
 git init
 git remote add remote_Name https://github.com/username/new_repo
-git push -u remote_Name master
+git push -u <remote_Name> master
 
 
 
 **{error for refusing push}
-git pull --allow-unrelated-histories
+git pull --allow-unrelated-histories <remote_Name> master
